@@ -1,0 +1,25 @@
+{
+  "$schema": "https://go.kicad.org/pcm/schemas/v1",
+  "name": "Respin Zero",
+  "description": "Get your KiCad board right the first time: IPC design rules, schematic and layout review (optional AI), fabrication files and version history.",
+  "description_full": "One toolbar button opens a tabbed window. Design Rules: IPC-2221/IPC-6012 rules from your answers and your fabricator (Indian and Chinese fabricators), with a reason for every value. Nets: power, ground and high-voltage nets with per-net width and clearance. Datasheets: a library per project; the AI gets the pages that matter for each exact part number. Schematic Review: generic checks and chip profiles (ESP32-C3, RP2040, STM32F1). ERC/DRC with waivers. Power & Thermal: temperature rise, vias, voltage drop. Optional AI review with any tool (Claude Code, Codex CLI, llm, Ollama, local servers, your own CLI) using your own account or a local model; every AI finding is checked against the design. Production: one-click Gerber zip, position file and BOM. Fabrication: final checks, then Gerbers, drill, BOM, pick-and-place and a fab note in JLCPCB, PCBWay or generic format. History: git versions, milestones, push/pull, a timeline of review progress, and Compare versions. Works beside the Schematic Editor through a desktop launcher. Formerly Board Review Assistant and IPC STE Design Assistant.",
+  "identifier": "com.github.YOUR-GITHUB-USERNAME.respin-zero",
+  "type": "plugin",
+  "author": {
+    "name": "Sourabh Shetty",
+    "contact": {
+      "github": "https://github.com/YOUR-GITHUB-USERNAME"
+    }
+  },
+  "license": "MIT",
+  "resources": {
+    "homepage": "https://github.com/YOUR-GITHUB-USERNAME/respin-zero"
+  },
+  "versions": [
+    {
+      "version": "4.4.0",
+      "status": "testing",
+      "kicad_version": "10.0"
+    }
+  ]
+}

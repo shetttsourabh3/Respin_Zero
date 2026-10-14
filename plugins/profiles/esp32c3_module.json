@@ -1,0 +1,140 @@
+{
+ "id": "esp32-c3-module",
+ "name": "Espressif ESP32-C3 module (MINI-1, WROOM-02, ...)",
+ "kind": "mcu",
+ "match": [
+  "^ESP32-?C3-?(MINI|WROOM|SUPERMINI|ZERO)"
+ ],
+ "source": "https://docs.espressif.com/projects/esp-hardware-design-guidelines/en/latest/esp32c3/schematic-checklist.html",
+ "verified": "2026-10-13",
+ "pins": {
+  "EN": [
+   "EN",
+   "CHIPEN"
+  ],
+  "GPIO9": [
+   "IO9",
+   "GPIO9"
+  ],
+  "GPIO8": [
+   "IO8",
+   "GPIO8"
+  ],
+  "GPIO2": [
+   "IO2",
+   "GPIO2"
+  ],
+  "3V3": [
+   "3V3",
+   "VDD",
+   "VCC",
+   "VDD3V3",
+   "3V3IN"
+  ],
+  "USB_DM": [
+   "IO18",
+   "GPIO18",
+   "USBD-",
+   "USBDM"
+  ],
+  "USB_DP": [
+   "IO19",
+   "GPIO19",
+   "USBD+",
+   "USBDP"
+  ],
+  "U0TXD": [
+   "TXD0",
+   "TXD",
+   "U0TXD",
+   "IO21",
+   "GPIO21"
+  ],
+  "U0RXD": [
+   "RXD0",
+   "RXD",
+   "U0RXD",
+   "IO20",
+   "GPIO20"
+  ]
+ },
+ "rules": [
+  {
+   "type": "supply",
+   "pins": [
+    "3V3"
+   ],
+   "min_v": 3.0,
+   "max_v": 3.6,
+   "tier": "block"
+  },
+  {
+   "type": "decoupling",
+   "pins": [
+    "3V3"
+   ],
+   "per_pin_nf": 100,
+   "max_count": 1,
+   "tier": "risk"
+  },
+  {
+   "type": "bulk",
+   "pins": [
+    "3V3"
+   ],
+   "min_uf": 10,
+   "tier": "risk",
+   "text": "Put at least 10 uF at the module supply entrance (Espressif: 10 uF at the main power entrance)."
+  },
+  {
+   "type": "strap",
+   "pin": "GPIO9",
+   "bad": "low",
+   "tier": "block",
+   "text": "GPIO9 low at reset starts download mode. The chip does not run your firmware. Remove the pull-down; GPIO9 has an internal pull-up (an external pull-up is recommended)."
+  },
+  {
+   "type": "max_cap",
+   "pin": "GPIO9",
+   "max_nf": 10,
+   "tier": "risk",
+   "text": "A large capacitor on GPIO9 can hold it low at reset and start download mode."
+  },
+  {
+   "type": "strap",
+   "pin": "GPIO8",
+   "bad": "low",
+   "tier": "risk",
+   "text": "GPIO8 must be high for download boot. With GPIO8 pulled low you cannot flash over USB or UART."
+  },
+  {
+   "type": "strap",
+   "pin": "GPIO2",
+   "want": "high",
+   "tier": "risk",
+   "text": "Espressif recommends a pull-up on GPIO2 to prevent glitches at boot."
+  },
+  {
+   "type": "enable_rc",
+   "pin": "EN",
+   "min_nf": 100,
+   "tier": "risk",
+   "text": "EN needs an RC delay (Espressif: 10 kOhm to 3.3 V and 1 uF to ground) and must never float."
+  },
+  {
+   "type": "debug",
+   "any_of": [
+    [
+     "USB_DM",
+     "USB_DP"
+    ],
+    [
+     "U0TXD",
+     "U0RXD"
+    ]
+   ],
+   "tier": "cosmetic",
+   "text": "Bring out USB (GPIO18/19) or UART0 (GPIO20/21) to a connector or test points to flash and debug the board."
+  }
+ ]
+}

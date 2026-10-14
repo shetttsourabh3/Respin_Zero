@@ -1,0 +1,53 @@
+{
+  "presets": [
+    {
+      "name": "Hobby prototype",
+      "description": "2-layer, 1.6 mm, low voltage, IPC Class 1. Cheapest and most forgiving.",
+      "values": {"ipc_class": 1, "layers": 2, "board_thickness_mm": 1.6, "outer_copper_oz": 1.0,
+                 "inner_copper_oz": 0.5, "max_voltage_v": 5, "hv_voltage_v": 0, "medical": false,
+                 "solder_mask_coated": true, "temp_rise_c": 20, "density": "B"}
+    },
+    {
+      "name": "Consumer product",
+      "description": "4-layer, 1.6 mm, IPC Class 2, up to 12 V.",
+      "values": {"ipc_class": 2, "layers": 4, "board_thickness_mm": 1.6, "outer_copper_oz": 1.0,
+                 "inner_copper_oz": 0.5, "max_voltage_v": 12, "hv_voltage_v": 0, "medical": false,
+                 "solder_mask_coated": true, "temp_rise_c": 10, "density": "B"}
+    },
+    {
+      "name": "Wearable (battery)",
+      "description": "4-layer, 1.0 mm thin board, IPC Class 2, battery voltages, dense parts.",
+      "values": {"ipc_class": 2, "layers": 4, "board_thickness_mm": 1.0, "outer_copper_oz": 1.0,
+                 "inner_copper_oz": 0.5, "max_voltage_v": 5, "hv_voltage_v": 0, "medical": false,
+                 "solder_mask_coated": true, "temp_rise_c": 10, "density": "C"}
+    },
+    {
+      "name": "Industrial 24 V",
+      "description": "4-layer, 1.6 mm, IPC Class 2, 24 V supply with transients to 30 V.",
+      "values": {"ipc_class": 2, "layers": 4, "board_thickness_mm": 1.6, "outer_copper_oz": 1.0,
+                 "inner_copper_oz": 0.5, "max_voltage_v": 30, "hv_voltage_v": 0, "medical": false,
+                 "solder_mask_coated": true, "temp_rise_c": 10, "density": "A"}
+    },
+    {
+      "name": "Mains powered (230 V)",
+      "description": "Includes an HV net class at 340 V peak. Add safety-standard creepage too.",
+      "values": {"ipc_class": 2, "layers": 2, "board_thickness_mm": 1.6, "outer_copper_oz": 1.0,
+                 "inner_copper_oz": 0.5, "max_voltage_v": 12, "hv_voltage_v": 340, "hv_netclass": "HV",
+                 "medical": false, "solder_mask_coated": true, "temp_rise_c": 10, "density": "A"}
+    },
+    {
+      "name": "Medical device (Class 2)",
+      "description": "Battery or internally powered medical device. IPC Class 2 minimum.",
+      "values": {"ipc_class": 2, "layers": 4, "board_thickness_mm": 1.0, "outer_copper_oz": 1.0,
+                 "inner_copper_oz": 0.5, "max_voltage_v": 5, "hv_voltage_v": 0, "medical": true,
+                 "solder_mask_coated": true, "temp_rise_c": 10, "density": "B"}
+    },
+    {
+      "name": "Medical / high reliability (Class 3)",
+      "description": "Failure can harm a patient. IPC Class 3 annular ring and edge margins.",
+      "values": {"ipc_class": 3, "layers": 4, "board_thickness_mm": 1.6, "outer_copper_oz": 1.0,
+                 "inner_copper_oz": 0.5, "max_voltage_v": 5, "hv_voltage_v": 0, "medical": true,
+                 "solder_mask_coated": true, "temp_rise_c": 10, "density": "A"}
+    }
+  ]
+}

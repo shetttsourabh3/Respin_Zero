@@ -1,0 +1,30 @@
+{
+  "_help": "Fabrication output formats. Add or correct one in ~/.kicad_review/fab_presets.json (same format, same id replaces). Check the fabricator's current upload guide before you order.",
+  "presets": [
+    {"id": "jlcpcb", "name": "JLCPCB", "fabricators": ["jlcpcb"],
+     "gerber": {"protel_ext": true, "x2": false, "netlist": false, "subtract_mask": false},
+     "drill": {"separate_pth_npth": true, "map": "gerberx2"},
+     "bom": {"columns": [["Comment", "{value}"], ["Designator", "{refs}"], ["Footprint", "{footprint}"],
+                          ["LCSC Part #", "{lcsc}"]], "group": true},
+     "cpl": {"columns": [["Designator", "Ref"], ["Mid X", "PosX"], ["Mid Y", "PosY"], ["Layer", "Side"],
+                          ["Rotation", "Rot"]], "side": {"top": "Top", "bottom": "Bottom"}},
+     "note": "Upload the gerber zip at jlcpcb.com. For assembly, upload the BOM and CPL files; check the part rotations in JLCPCB's preview, some footprints need a rotation offset."},
+    {"id": "pcbway", "name": "PCBWay", "fabricators": ["pcbway"],
+     "gerber": {"protel_ext": true, "x2": true, "netlist": true, "subtract_mask": false},
+     "drill": {"separate_pth_npth": false, "map": "gerberx2"},
+     "bom": {"columns": [["Item #", "{index}"], ["Designator", "{refs}"], ["Qty", "{qty}"], ["Manufacturer", "{manufacturer}"],
+                          ["Mfg Part #", "{mpn}"], ["Description / Value", "{value}"], ["Package/Footprint", "{footprint}"],
+                          ["Type", "{mount}"]], "group": true},
+     "cpl": {"columns": [["Designator", "Ref"], ["Mid X", "PosX"], ["Mid Y", "PosY"], ["Layer", "Side"],
+                          ["Rotation", "Rot"]], "side": {"top": "T", "bottom": "B"}},
+     "note": "Upload the gerber zip at pcbway.com. For assembly, send the BOM and the centroid (CPL) file."},
+    {"id": "generic", "name": "Generic (Gerber X2, Excellon) - Indian fabs and others", "fabricators": [],
+     "gerber": {"protel_ext": true, "x2": true, "netlist": true, "subtract_mask": false},
+     "drill": {"separate_pth_npth": true, "map": "gerberx2"},
+     "bom": {"columns": [["Reference", "{refs}"], ["Qty", "{qty}"], ["Value", "{value}"], ["Footprint", "{footprint}"],
+                          ["Manufacturer", "{manufacturer}"], ["MPN", "{mpn}"], ["Datasheet", "{datasheet}"]], "group": true},
+     "cpl": {"columns": [["Ref", "Ref"], ["Val", "Val"], ["Package", "Package"], ["PosX", "PosX"], ["PosY", "PosY"],
+                          ["Rot", "Rot"], ["Side", "Side"]], "side": {"top": "top", "bottom": "bottom"}},
+     "note": "Most fabricators (for example PCB Power and Lion Circuits) accept Gerber X2 and Excellon. Send the fab note with the files."}
+  ]
+}

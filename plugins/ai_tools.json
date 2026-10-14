@@ -1,0 +1,74 @@
+{
+  "_help": "Bundled AI tools. Add or override tools in ~/.kicad_review/ai_tools.json (same format). See README, 'AI tools'.",
+  "tools": [
+    {
+      "id": "claude",
+      "type": "builtin"
+    },
+    {
+      "id": "codex",
+      "type": "builtin"
+    },
+    {
+      "id": "llm",
+      "name": "llm CLI (OpenAI, Gemini, Mistral, local... via plugins)",
+      "command": [
+        "llm",
+        "--no-log"
+      ],
+      "prompt": "stdin",
+      "system": "merged",
+      "output": "stdout",
+      "model_args": [
+        "-m",
+        "{model}"
+      ],
+      "model_at": 1,
+      "list_models": [
+        "llm",
+        "models",
+        "list"
+      ],
+      "list_skip_header": false,
+      "files": "text",
+      "billing": "the key or account you set up in llm",
+      "help_url": "https://llm.datasette.io/",
+      "timeout": 900
+    },
+    {
+      "id": "ollama",
+      "name": "Ollama CLI (local model)",
+      "command": [
+        "ollama",
+        "run",
+        "{model}"
+      ],
+      "model_required": true,
+      "prompt": "stdin",
+      "system": "merged",
+      "output": "stdout",
+      "list_models": [
+        "ollama",
+        "list"
+      ],
+      "files": "text",
+      "billing": "this computer (local model)",
+      "help_url": "https://ollama.com/",
+      "timeout": 1800
+    },
+    {
+      "id": "local-server",
+      "type": "local_server",
+      "name": "Local model server (Ollama, LM Studio, llama.cpp...)",
+      "base_url": "http://127.0.0.1:11434/v1",
+      "ports": [
+        11434,
+        1234,
+        8080,
+        8000,
+        1337
+      ],
+      "files": "text"
+    }
+  ]
+}

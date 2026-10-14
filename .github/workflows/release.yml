@@ -1,0 +1,21 @@
+name: release
+on:
+  push:
+    tags: ["v*"]
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y python3-wxgtk4.0 python3-pytest xvfb git
+      - run: xvfb-run -a python3 -m pytest -q tests
+      - id: build
+        run: python3 tools/build_zip.py | tee build.txt
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*.zip
+          generate_release_notes: true
+          prerelease: ${{ contains(github.ref_name, '-') }}
+          body_path: build.txt
