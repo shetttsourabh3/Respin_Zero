@@ -1,0 +1,22 @@
+name: Chip profile request
+description: Ask for checks for a specific chip or module (boot pins, supply, crystal, reset).
+labels: [chip-profile]
+body:
+  - type: input
+    id: part
+    attributes:
+      label: Chip or module and exact part number
+      placeholder: ESP32-S3-WROOM-1-N8R8
+    validations:
+      required: true
+  - type: input
+    id: datasheet
+    attributes:
+      label: Link to the official datasheet or hardware design guide
+    validations:
+      required: true
+  - type: textarea
+    id: rules
+    attributes:
+      label: What should be checked?
+      description: Pins, required parts and values, with the datasheet section or table.

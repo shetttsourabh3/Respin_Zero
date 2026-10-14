@@ -1,0 +1,20 @@
+name: Feature request
+description: An idea to make board design safer or faster.
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does it solve?
+      description: For example "I ordered boards with a floating boot pin and nothing warned me".
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would you like?
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options: [Design rules, Schematic review, Layout review, AI review, Datasheets, Production / Fabrication, History, User interface, Other]

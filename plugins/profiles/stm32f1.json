@@ -1,0 +1,114 @@
+{
+ "id": "stm32f1",
+ "name": "ST STM32F10x",
+ "kind": "mcu",
+ "match": [
+  "^STM32F10[0-3]"
+ ],
+ "source": "https://www.st.com/resource/en/application_note/an2586-getting-started-with-stm32f10xxx-hardware-development-stmicroelectronics.pdf",
+ "verified": "2026-10-13",
+ "pins": {
+  "VDD": [
+   "VDD\\d*"
+  ],
+  "VDDA": [
+   "VDDA"
+  ],
+  "VBAT": [
+   "VBAT"
+  ],
+  "NRST": [
+   "NRST"
+  ],
+  "BOOT0": [
+   "BOOT0"
+  ],
+  "OSC_IN": [
+   "OSCIN",
+   "PD0",
+   "PD0OSCIN"
+  ],
+  "OSC_OUT": [
+   "OSCOUT",
+   "PD1",
+   "PD1OSCOUT"
+  ],
+  "SWDIO": [
+   "PA13",
+   "SWDIO",
+   "JTMS"
+  ],
+  "SWCLK": [
+   "PA14",
+   "SWCLK",
+   "JTCK"
+  ]
+ },
+ "rules": [
+  {
+   "type": "supply",
+   "pins": [
+    "VDD",
+    "VDDA"
+   ],
+   "min_v": 2.0,
+   "max_v": 3.6,
+   "tier": "block"
+  },
+  {
+   "type": "decoupling",
+   "pins": [
+    "VDD"
+   ],
+   "per_pin_nf": 100,
+   "tier": "risk",
+   "text": "ST AN2586: one 100 nF ceramic capacitor on each VDD pin."
+  },
+  {
+   "type": "bulk",
+   "pins": [
+    "VDD"
+   ],
+   "min_uf": 4.7,
+   "tier": "risk",
+   "text": "ST AN2586: one 4.7 uF or larger (10 uF typical) capacitor on VDD."
+  },
+  {
+   "type": "min_cap",
+   "pin": "VDDA",
+   "min_uf": 1,
+   "tier": "risk",
+   "text": "ST AN2586: 100 nF and 1 uF on VDDA."
+  },
+  {
+   "type": "no_float",
+   "pin": "VBAT",
+   "tier": "risk",
+   "text": "With no battery, connect VBAT to VDD with a 100 nF decoupling capacitor (ST AN2586)."
+  },
+  {
+   "type": "boot_pin",
+   "pin": "BOOT0",
+   "tier": "block",
+   "text": "BOOT0 selects the boot memory. Pull it low (for example 10 kOhm to ground) to run from flash. Do not leave it floating."
+  },
+  {
+   "type": "min_cap",
+   "pin": "NRST",
+   "min_uf": 0.01,
+   "tier": "cosmetic",
+   "text": "ST recommends 100 nF from NRST to ground against parasitic resets (10 nF minimum to save power)."
+  },
+  {
+   "type": "debug",
+   "any_of": [
+    [
+     "SWDIO",
+     "SWCLK"
+    ]
+   ],
+   "tier": "cosmetic",
+   "text": "Bring SWDIO (PA13) and SWCLK (PA14) to a header or test points for programming."
+  }
+ ]
+}

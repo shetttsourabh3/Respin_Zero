@@ -1,0 +1,159 @@
+{
+ "id": "esp32-c3",
+ "name": "Espressif ESP32-C3 (bare chip)",
+ "kind": "mcu",
+ "match": [
+  "^ESP32-?C3(FN4|FH4|FH4AZ|FN4X|FH4X)?$"
+ ],
+ "source": "https://docs.espressif.com/projects/esp-hardware-design-guidelines/en/latest/esp32c3/schematic-checklist.html",
+ "verified": "2026-10-13",
+ "pins": {
+  "EN": [
+   "CHIPEN",
+   "EN"
+  ],
+  "GPIO9": [
+   "GPIO9",
+   "IO9"
+  ],
+  "GPIO8": [
+   "GPIO8",
+   "IO8"
+  ],
+  "GPIO2": [
+   "GPIO2",
+   "IO2"
+  ],
+  "VDD3P3_CPU": [
+   "VDD3P3CPU"
+  ],
+  "VDD3P3_RTC": [
+   "VDD3P3RTC"
+  ],
+  "VDDA": [
+   "VDDA\\d*"
+  ],
+  "VDD3P3": [
+   "VDD3P3\\d*"
+  ],
+  "XTAL_P": [
+   "XTALP"
+  ],
+  "XTAL_N": [
+   "XTALN"
+  ],
+  "USB_DM": [
+   "GPIO18",
+   "USBD-",
+   "USBDM"
+  ],
+  "USB_DP": [
+   "GPIO19",
+   "USBD+",
+   "USBDP"
+  ],
+  "U0TXD": [
+   "U0TXD",
+   "GPIO21"
+  ],
+  "U0RXD": [
+   "U0RXD",
+   "GPIO20"
+  ]
+ },
+ "rules": [
+  {
+   "type": "supply",
+   "pins": [
+    "VDD3P3_CPU",
+    "VDD3P3_RTC",
+    "VDDA",
+    "VDD3P3"
+   ],
+   "min_v": 3.0,
+   "max_v": 3.6,
+   "tier": "block"
+  },
+  {
+   "type": "decoupling",
+   "pins": [
+    "VDD3P3_CPU",
+    "VDD3P3_RTC",
+    "VDDA",
+    "VDD3P3"
+   ],
+   "per_pin_nf": 100,
+   "tier": "risk"
+  },
+  {
+   "type": "bulk",
+   "pins": [
+    "VDDA",
+    "VDD3P3"
+   ],
+   "min_uf": 10,
+   "tier": "risk",
+   "text": "Espressif: 10 uF on the analog supply rail together with the 0.1 uF capacitors."
+  },
+  {
+   "type": "strap",
+   "pin": "GPIO9",
+   "bad": "low",
+   "tier": "block",
+   "text": "GPIO9 low at reset starts download mode. The chip does not run your firmware. Remove the pull-down; GPIO9 has an internal pull-up (an external pull-up is recommended)."
+  },
+  {
+   "type": "max_cap",
+   "pin": "GPIO9",
+   "max_nf": 10,
+   "tier": "risk",
+   "text": "A large capacitor on GPIO9 can hold it low at reset and start download mode."
+  },
+  {
+   "type": "strap",
+   "pin": "GPIO8",
+   "bad": "low",
+   "tier": "risk",
+   "text": "GPIO8 must be high for download boot. With GPIO8 pulled low you cannot flash over USB or UART."
+  },
+  {
+   "type": "strap",
+   "pin": "GPIO2",
+   "want": "high",
+   "tier": "risk",
+   "text": "Espressif recommends a pull-up on GPIO2 to prevent glitches at boot."
+  },
+  {
+   "type": "enable_rc",
+   "pin": "EN",
+   "min_nf": 100,
+   "tier": "risk",
+   "text": "CHIP_EN needs an RC delay (Espressif: 10 kOhm to 3.3 V and 1 uF to ground) and must never float."
+  },
+  {
+   "type": "crystal",
+   "pins": [
+    "XTAL_P",
+    "XTAL_N"
+   ],
+   "mhz": 40,
+   "tier": "block",
+   "text": "ESP32-C3 supports only a 40 MHz main crystal (+-10 ppm)."
+  },
+  {
+   "type": "debug",
+   "any_of": [
+    [
+     "USB_DM",
+     "USB_DP"
+    ],
+    [
+     "U0TXD",
+     "U0RXD"
+    ]
+   ],
+   "tier": "cosmetic",
+   "text": "Bring out USB (GPIO18/19) or UART0 (GPIO20/21) to a connector or test points to flash and debug the board."
+  }
+ ]
+}

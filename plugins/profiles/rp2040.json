@@ -1,0 +1,136 @@
+{
+ "id": "rp2040",
+ "name": "Raspberry Pi RP2040",
+ "kind": "mcu",
+ "match": [
+  "^RP2040$"
+ ],
+ "source": "https://datasheets.raspberrypi.com/rp2040/hardware-design-with-rp2040.pdf",
+ "verified": "2026-10-13",
+ "pins": {
+  "IOVDD": [
+   "IOVDD\\d*"
+  ],
+  "DVDD": [
+   "DVDD\\d*"
+  ],
+  "VREG_IN": [
+   "VREGIN",
+   "VREGVIN"
+  ],
+  "VREG_OUT": [
+   "VREGVOUT",
+   "VREGOUT"
+  ],
+  "TESTEN": [
+   "TESTEN"
+  ],
+  "QSPI_SS": [
+   "QSPISS",
+   "QSPISSN",
+   "QSPICSN"
+  ],
+  "XIN": [
+   "XIN"
+  ],
+  "XOUT": [
+   "XOUT"
+  ],
+  "USB_DP": [
+   "USBDP"
+  ],
+  "USB_DM": [
+   "USBDM"
+  ],
+  "SWCLK": [
+   "SWCLK"
+  ],
+  "SWD": [
+   "SWD",
+   "SWDIO"
+  ]
+ },
+ "rules": [
+  {
+   "type": "decoupling",
+   "pins": [
+    "IOVDD",
+    "DVDD"
+   ],
+   "per_pin_nf": 100,
+   "tier": "risk",
+   "text": "Raspberry Pi: one 100 nF capacitor close to each power pin (two pins may share one if routing is tight)."
+  },
+  {
+   "type": "min_cap",
+   "pin": "VREG_IN",
+   "min_uf": 1,
+   "tier": "risk",
+   "text": "Put 1 uF close to VREG_VIN."
+  },
+  {
+   "type": "min_cap",
+   "pin": "VREG_OUT",
+   "min_uf": 1,
+   "tier": "risk",
+   "text": "Put 1 uF close to VREG_VOUT."
+  },
+  {
+   "type": "same_net",
+   "pins": [
+    "DVDD",
+    "VREG_OUT"
+   ],
+   "tier": "risk",
+   "text": "DVDD needs 1.1 V. Connect DVDD to VREG_VOUT, unless you supply 1.1 V from an external regulator."
+  },
+  {
+   "type": "tie_ground",
+   "pin": "TESTEN",
+   "tier": "block",
+   "text": "TESTEN is a factory test pin. Connect it directly to ground."
+  },
+  {
+   "type": "strap",
+   "pin": "QSPI_SS",
+   "bad": "low",
+   "tier": "block",
+   "text": "QSPI_SS low at reset starts BOOTSEL (USB mass storage) mode. Use a button or jumper through 1 kOhm, not a fixed pull-down."
+  },
+  {
+   "type": "crystal",
+   "pins": [
+    "XIN",
+    "XOUT"
+   ],
+   "mhz": 12,
+   "tier": "risk",
+   "text": "The RP2040 USB boot ROM expects a 12 MHz crystal (Raspberry Pi: ABM8-272-T3, 15 pF load caps, 1 kOhm series resistor)."
+  },
+  {
+   "type": "series_r",
+   "pins": [
+    "USB_DP",
+    "USB_DM"
+   ],
+   "ohms": [
+    27,
+    27
+   ],
+   "tolerance": 0.25,
+   "tier": "cosmetic",
+   "text": "Raspberry Pi: 27 Ohm series resistors on USB_DP and USB_DM, close to the chip."
+  },
+  {
+   "type": "debug",
+   "any_of": [
+    [
+     "SWCLK",
+     "SWD"
+    ]
+   ],
+   "tier": "cosmetic",
+   "text": "Bring SWCLK and SWD to a header or test points for debugging."
+  }
+ ]
+}
